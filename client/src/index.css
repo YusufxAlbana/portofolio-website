@@ -68,6 +68,7 @@ button {
 
 .app-layout {
   display: flex;
+  justify-content: center;
   max-width: 1450px;
   margin: 0 auto;
   min-height: 100vh;
@@ -263,7 +264,11 @@ button {
   flex: 1;
   min-width: 0;
   max-width: 900px;
+  border-left: 1px solid var(--border-color);
+  /* Added left border to touch sidebar */
   border-right: 1px solid var(--border-color);
+  margin-left: -1px;
+  /* Overlap the sidebar-left right border so they merge */
 }
 
 .admin-feed {
@@ -296,30 +301,23 @@ button {
 /* ─── Profile Banner ───────────────────────── */
 
 .profile-banner {
-  height: 200px;
-  background: linear-gradient(135deg, #1a1a2e 0%, #0a192f 50%, #1a1a2e 100%);
+  height: 250px;
+  background: var(--bg-primary);
+  /* Use solid background instead of gradient */
   position: relative;
   overflow: hidden;
-  margin-top: 4px;
+  /* Removed margin-top: 4px; */
 }
 
 .profile-banner img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Changed from contain to cover so it fills the width */
   object-position: center;
 }
 
-.profile-banner::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60%;
-  background: linear-gradient(to top, var(--bg-primary), transparent);
-  pointer-events: none;
-}
+/* Removed .profile-banner::after since it obscures uncropped images */
 
 .profile-info {
   padding: 0 16px;
@@ -694,12 +692,33 @@ button {
 .sidebar-right {
   width: 310px;
   padding: 12px 24px 12px 20px;
-  margin-left: 8px;
+  margin-left: -1px;
+  /* Changed from 8px to -1px to overlap with main-feed border */
   position: sticky;
   top: 0;
   height: 100vh;
-  overflow-y: auto;
+  overflow: hidden;
+  /* Changed from auto to hidden */
+  border-left: 1px solid var(--border-color);
   flex-shrink: 0;
+  display: flex;
+  /* Flex required to let children fill remaining space */
+  flex-direction: column;
+}
+
+.sidebar-right-doodle {
+  position: absolute;
+  top: -12px;
+  left: -20px;
+  width: calc(100% + 44px);
+  height: calc(100% + 24px);
+  background-image: url('/assets/images/doodle_pattern.png');
+  background-size: 350px;
+  opacity: 0.04;
+  /* Increased from 0.25 */
+  z-index: -1;
+  pointer-events: none;
+  filter: invert(1);
 }
 
 .sidebar-right::-webkit-scrollbar {
@@ -805,13 +824,23 @@ button {
 
 /* Tech Stack chips */
 
+.tech-stack-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  /* Important to allow children to overflow scroll inside flex */
+}
+
 .tech-scroll {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   padding: 0 16px 16px;
-  max-height: 220px;
+  max-height: none;
   overflow-y: auto;
+  flex: 1;
+  min-height: 0;
 }
 
 .tech-scroll::-webkit-scrollbar {
@@ -1058,22 +1087,39 @@ button {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-top: 1px solid var(--border-color);
-  padding: 8px 0;
+  padding: 8px;
   z-index: 100;
-  justify-content: space-around;
+  justify-content: space-between;
+  overflow-x: auto;
+  gap: 4px;
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.mobile-nav::-webkit-scrollbar {
+  display: none;
+  /* Chrome/Safari */
 }
 
 .mobile-nav-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: 8px 16px;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 4px;
   font-size: 1.3rem;
   color: var(--text-secondary);
   background: none;
   border: none;
   transition: var(--transition);
+  flex: 1 0 auto;
+  min-width: 52px;
+}
+
+.mobile-nav-item span {
+  font-size: 0.65rem;
+  font-weight: 600;
 }
 
 .mobile-nav-item.active {
@@ -1280,12 +1326,9 @@ button {
    ═══════════════════════════════════════════════════ */
 
 .admin-feed {
-  max-width: 680px;
   width: 100%;
-  margin: 0 auto;
+  padding: 0 32px;
   min-height: 100vh;
-  border-left: 1px solid var(--border-color);
-  border-right: 1px solid var(--border-color);
 }
 
 .admin-login {
@@ -1296,7 +1339,7 @@ button {
 
 .admin-login form {
   width: 100%;
-  max-width: 380px;
+  max-width: 480px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1356,6 +1399,8 @@ button {
   flex-direction: column;
   gap: 14px;
   background: var(--bg-primary);
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .admin-form h3 {
@@ -1481,6 +1526,8 @@ button {
 
 .admin-list {
   border-top: 1px solid var(--border-color);
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .admin-list-item {
@@ -1876,8 +1923,8 @@ button {
   position: absolute;
   left: 50%;
   top: 28px;
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: var(--bg-primary);
   border: 3px solid var(--accent);
@@ -2036,7 +2083,7 @@ button {
   }
 
   .edu-timeline-dot {
-    left: 16px;
+    left: 0;
     top: 20px;
   }
 
@@ -2112,4 +2159,219 @@ button {
   text-transform: none;
   letter-spacing: normal;
   font-weight: 400;
+}
+
+/* ─── Image Grid (Twitter/X Style) ───────────────────────────── */
+
+.twitter-grid-container {
+  width: 100%;
+  margin-top: 12px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+}
+
+.twitter-grid {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  background: var(--border-color);
+  /* Gap color */
+}
+
+/* 1 Image Grid */
+.twitter-grid-1 {
+  aspect-ratio: 16 / 9;
+  display: block;
+  position: relative;
+  background: var(--bg-secondary);
+}
+
+.twitter-grid-1 .grid-item {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.twitter-grid-1 .grid-img-blur {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(25px);
+  opacity: 0.6;
+  position: absolute;
+  z-index: 0;
+  transform: scale(1.1);
+  /* Prevent blur edges */
+}
+
+.twitter-grid-1 .grid-img-main {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: absolute;
+  z-index: 1;
+}
+
+/* 2 Image Grid */
+.twitter-grid-2 {
+  grid-template-columns: 1fr 1fr;
+  aspect-ratio: 16 / 9;
+}
+
+.twitter-grid-2 .grid-item {
+  height: 100%;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.twitter-grid-2 .grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 3 Image Grid */
+.twitter-grid-3 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  aspect-ratio: 16 / 9;
+}
+
+.twitter-grid-3 .grid-item:nth-child(1) {
+  grid-row: 1 / 3;
+}
+
+.twitter-grid-3 .grid-item {
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.twitter-grid-3 .grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 4 Image Grid */
+.twitter-grid-4 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  aspect-ratio: 16 / 9;
+}
+
+.twitter-grid-4 .grid-item {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.twitter-grid-4 .grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.grid-more-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  font-weight: 600;
+  font-family: var(--font);
+}
+
+/* ─── Lightbox Overlay ───────────────────────── */
+
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  z-index: 10000;
+}
+
+.lightbox-close:hover {
+  background: rgba(29, 155, 240, 0.9);
+  transform: scale(1.05);
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  z-index: 10000;
+}
+
+.lightbox-nav:hover {
+  background: rgba(29, 155, 240, 0.9);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.lightbox-prev {
+  left: 24px;
+}
+
+.lightbox-next {
+  right: 24px;
 }

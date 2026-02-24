@@ -2,6 +2,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { Icon } from '../components/Icon'
 import { TimeAgo } from '../components/TimeAgo'
+import { ImageCarousel } from '../components/ImageCarousel'
 
 const cardVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -39,6 +40,11 @@ export function BlogPage({ profile, blog }) {
                             </div>
                             <div className="post-blog-title">{post.title}</div>
                             <div className="post-text" style={{ whiteSpace: 'pre-line' }}>{post.text}</div>
+                            {post.images && post.images.length > 0 && (
+                                <div style={{ marginTop: '12px' }}>
+                                    <ImageCarousel images={post.images} altPrefix={`Blog image`} />
+                                </div>
+                            )}
                         </div>
                     </motion.article>
                 ))

@@ -2,6 +2,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { Icon } from '../components/Icon'
 import { TimeAgo } from '../components/TimeAgo'
+import { ImageCarousel } from '../components/ImageCarousel'
 
 const cardVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -58,22 +59,11 @@ export function CertificationPage({ profile, certifications }) {
                             {/* Certificate Images */}
                             {cert.images && cert.images.length > 0 && (
                                 <motion.div
-                                    className="cert-images-grid"
                                     initial={{ opacity: 0, scale: 0.96 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     transition={{ delay: i * 0.12 + 0.2, duration: 0.4 }}
                                 >
-                                    {cert.images.map((img, j) => (
-                                        <a
-                                            key={j}
-                                            href={img}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="cert-image-item"
-                                        >
-                                            <img src={img} alt={`${cert.title} - ${j + 1}`} />
-                                        </a>
-                                    ))}
+                                    <ImageCarousel images={cert.images} altPrefix={cert.title} />
                                 </motion.div>
                             )}
                         </div>

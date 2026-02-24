@@ -2,6 +2,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { Icon } from '../components/Icon'
 import { TimeAgo } from '../components/TimeAgo'
+import { ImageCarousel } from '../components/ImageCarousel'
 
 const cardVariants = {
     hidden: { opacity: 0, y: 40 },
@@ -37,35 +38,12 @@ export function ProjectsPage({ profile, projects }) {
                                 <span className="post-dot">·</span>
                                 <span className="post-time"><TimeAgo timestamp={proj.time} /></span>
                             </div>
-                            <div className="post-text">{proj.text}</div>
-
-                            {/* Project Images */}
-                            {proj.images && proj.images.length > 0 && (
-                                <motion.div
-                                    className="cert-images-grid"
-                                    initial={{ opacity: 0, scale: 0.96 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    transition={{ delay: i * 0.12 + 0.2, duration: 0.4 }}
-                                >
-                                    {proj.images.map((img, j) => (
-                                        <a
-                                            key={j}
-                                            href={img}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="cert-image-item"
-                                        >
-                                            <img src={img} alt={`${proj.title} - ${j + 1}`} />
-                                        </a>
-                                    ))}
-                                </motion.div>
-                            )}
-
                             <motion.div
                                 className="post-attachment"
                                 initial={{ opacity: 0, scale: 0.96 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: i * 0.12 + 0.3, duration: 0.4 }}
+                                transition={{ delay: i * 0.12 + 0.2, duration: 0.4 }}
+                                style={{ marginBottom: proj.images && proj.images.length > 0 ? '12px' : 0 }}
                             >
                                 <div className="post-attachment-preview">
                                     <div className="post-attachment-title">{proj.title}</div>
@@ -77,6 +55,17 @@ export function ProjectsPage({ profile, projects }) {
                                     </div>
                                 </div>
                             </motion.div>
+
+                            {/* Project Images */}
+                            {proj.images && proj.images.length > 0 && (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.96 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ delay: i * 0.12 + 0.3, duration: 0.4 }}
+                                >
+                                    <ImageCarousel images={proj.images} altPrefix={proj.title} />
+                                </motion.div>
+                            )}
                         </div>
                     </motion.article>
                 ))

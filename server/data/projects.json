@@ -1,54 +1,21 @@
 [
   {
-    "id": "proj-1",
-    "title": "E-Commerce Platform",
-    "desc": "Fullstack e-commerce dengan fitur lengkap: cart, payment gateway, multi-vendor, inventory management, dan order tracking real-time.",
+    "id": "project-1771829231256",
+    "title": "Portofolio Website",
+    "desc": "a website to showcase everything I have built or run as a young software engineering student.",
     "tags": [
-      "Next.js",
-      "Node.js",
-      "PostgreSQL",
-      "Stripe"
+      "React.js",
+      "JSON",
+      "HTML",
+      "TailwindCSS"
     ],
-    "text": "Baru selesai develop E-Commerce Platform — Fullstack app dengan keranjang belanja, payment system, dan admin dashboard. Support multi-vendor + real-time order tracking.",
-    "time": 1771369232884
-  },
-  {
-    "id": "proj-2",
-    "title": "Realtime Chat App",
-    "desc": "Aplikasi chat real-time: private messaging, group rooms, image sharing, file attachments, dan push notifications.",
-    "tags": [
-      "React",
-      "Socket.io",
-      "Express",
-      "MongoDB"
+    "images": [
+      "http://localhost:5000/uploads/cert-images/cert-1771829076593-931.png",
+      "http://localhost:5000/uploads/cert-images/cert-1771829081461-65.png",
+      "http://localhost:5000/uploads/cert-images/cert-1771829081498-635.png",
+      "http://localhost:5000/uploads/cert-images/cert-1771829081517-952.png",
+      "http://localhost:5000/uploads/cert-images/cert-1771829081523-677.png"
     ],
-    "text": "Building real-time chat app — Socket.io memang powerful banget buat handle WebSocket connections. #WebDev #React",
-    "time": 1771358432884
-  },
-  {
-    "id": "proj-3",
-    "title": "Analytics Dashboard",
-    "desc": "Dashboard interaktif untuk visualisasi data penjualan. Chart dinamis, advanced filtering, dan export laporan multi-format.",
-    "tags": [
-      "Vue.js",
-      "D3.js",
-      "Python",
-      "FastAPI"
-    ],
-    "text": "Data visualization — baru deploy analytics dashboard pake D3.js + Vue. Chart dinamis, filter interaktif, dan export ke PDF/Excel. #DataViz",
-    "time": 1771290032884
-  },
-  {
-    "id": "proj-4",
-    "title": "Blog & CMS",
-    "desc": "Content Management System: rich text editor, SEO optimization, multi-language support, media library, dan scheduled publishing.",
-    "tags": [
-      "Next.js",
-      "Prisma",
-      "PostgreSQL",
-      "MDX"
-    ],
-    "text": "Launching my custom CMS — Rich text editor, SEO tools, multi-language, dan scheduled publishing. Built with Next.js + Prisma. #NextJS",
-    "time": 1771117232884
+    "time": 1771829231256
   }
 ]

@@ -302,12 +302,12 @@ function AdminDashboard({ token, onLogout }) {
 
 function ProjectsEditor({ projects, onAdd, onUpdate, onDelete }) {
     const [editing, setEditing] = useState(null)
-    const [form, setForm] = useState({ title: '', desc: '', text: '', tags: '', images: [] })
+    const [form, setForm] = useState({ title: '', desc: '', tags: '', images: [] })
     const [uploading, setUploading] = useState(false)
     const fileInputRef = useRef(null)
 
     const resetForm = () => {
-        setForm({ title: '', desc: '', text: '', tags: '', images: [] })
+        setForm({ title: '', desc: '', tags: '', images: [] })
         setEditing(null)
     }
 
@@ -315,7 +315,6 @@ function ProjectsEditor({ projects, onAdd, onUpdate, onDelete }) {
         setForm({
             title: proj.title,
             desc: proj.desc || '',
-            text: proj.text || '',
             tags: (proj.tags || []).join(', '),
             images: proj.images || [],
         })
@@ -372,7 +371,6 @@ function ProjectsEditor({ projects, onAdd, onUpdate, onDelete }) {
                 <h3>{editing ? <><span className="admin-icon-inline"><AdminIcon.Pencil /></span> Edit Project</> : <><span className="admin-icon-inline"><AdminIcon.Plus /></span> Add Project</>}</h3>
                 <input className="admin-input" placeholder="Title" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} required />
                 <textarea className="admin-textarea no-resize" placeholder="Description" value={form.desc} onChange={e => setForm({ ...form, desc: e.target.value })} required />
-                <textarea className="admin-textarea no-resize" placeholder="Tweet text" value={form.text} onChange={e => setForm({ ...form, text: e.target.value })} required />
                 <input className="admin-input" placeholder="Tags (comma separated)" value={form.tags} onChange={e => setForm({ ...form, tags: e.target.value })} />
 
                 {/* Image Upload */}
@@ -433,16 +431,48 @@ function ProjectsEditor({ projects, onAdd, onUpdate, onDelete }) {
 
 function BlogEditor({ posts, onAdd, onUpdate, onDelete }) {
     const [editing, setEditing] = useState(null)
-    const [form, setForm] = useState({ title: '', text: '' })
+    const [form, setForm] = useState({ title: '', text: '', images: [] })
+    const [uploading, setUploading] = useState(false)
+    const fileInputRef = useRef(null)
 
     const resetForm = () => {
-        setForm({ title: '', text: '' })
+        setForm({ title: '', text: '', images: [] })
         setEditing(null)
     }
 
     const startEdit = (post) => {
-        setForm({ title: post.title, text: post.text })
+        setForm({ title: post.title, text: post.text, images: post.images || [] })
         setEditing(post.id)
+    }
+
+    const handleImageUpload = async (e) => {
+        const files = Array.from(e.target.files)
+        if (files.length === 0) return
+        setUploading(true)
+        try {
+            const formData = new FormData()
+            files.forEach(f => formData.append('images', f))
+            const token = localStorage.getItem('admin_token')
+            const res = await fetch(`${API}/upload-blog-images`, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${token}` },
+                body: formData,
+            })
+            const data = await res.json()
+            if (res.ok && data.urls) {
+                setForm(prev => ({ ...prev, images: [...prev.images, ...data.urls] }))
+            } else {
+                alert('Upload failed')
+            }
+        } catch (err) {
+            alert('Upload failed')
+        }
+        setUploading(false)
+        if (fileInputRef.current) fileInputRef.current.value = ''
+    }
+
+    const removeImage = (idx) => {
+        setForm(prev => ({ ...prev, images: prev.images.filter((_, i) => i !== idx) }))
     }
 
     const handleSubmit = (e) => {
@@ -462,6 +492,26 @@ function BlogEditor({ posts, onAdd, onUpdate, onDelete }) {
                 <h3>{editing ? <><span className="admin-icon-inline"><AdminIcon.Pencil /></span> Edit Post</> : <><span className="admin-icon-inline"><AdminIcon.Plus /></span> Add Post</>}</h3>
                 <input className="admin-input" placeholder="Title" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} required />
                 <textarea className="admin-textarea no-resize" placeholder="Content" value={form.text} onChange={e => setForm({ ...form, text: e.target.value })} required rows={6} />
+
+                {/* Image Upload */}
+                <div className="admin-field">
+                    <label>Blog Images</label>
+                    <input type="file" accept="image/*" multiple ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageUpload} />
+                    <button type="button" className="admin-btn-secondary" onClick={() => fileInputRef.current?.click()} disabled={uploading}>
+                        {uploading ? 'Uploading...' : '📷 Upload Images'}
+                    </button>
+                    {form.images.length > 0 && (
+                        <div className="admin-image-preview-grid">
+                            {form.images.map((url, j) => (
+                                <div key={j} className="admin-image-preview-item">
+                                    <img src={url} alt="" />
+                                    <button type="button" onClick={() => removeImage(j)} className="admin-image-remove">✕</button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
                 <div className="admin-form-actions">
                     <button type="submit" className="admin-btn-primary">{editing ? 'Update' : 'Add'}</button>
                     {editing && <button type="button" className="admin-btn-secondary" onClick={resetForm}>Cancel</button>}
@@ -474,6 +524,11 @@ function BlogEditor({ posts, onAdd, onUpdate, onDelete }) {
                         <div className="admin-list-info">
                             <strong>{post.title}</strong>
                             <p>{post.text.slice(0, 100)}...</p>
+                            {post.images && post.images.length > 0 && (
+                                <div style={{ display: 'flex', gap: 4, marginTop: 6, flexWrap: 'wrap' }}>
+                                    {post.images.map((url, j) => <img key={j} src={url} alt="" style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 6, border: '1px solid var(--border-color)' }} />)}
+                                </div>
+                            )}
                             <span className="admin-time" style={{ fontSize: '12px', color: '#666', marginTop: '4px', display: 'block' }}>
                                 {new Date(post.time).toLocaleString()}
                             </span>

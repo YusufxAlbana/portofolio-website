@@ -11,6 +11,7 @@ import { SkillsPage } from './pages/SkillsPage'
 import { BlogPage } from './pages/BlogPage'
 import { CertificationPage } from './pages/CertificationPage'
 import { EducationPage } from './pages/EducationPage'
+import { ContactPage } from './pages/ContactPage'
 
 const API = 'http://localhost:5000/api'
 
@@ -109,13 +110,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout apiData={{ profile, projects, blog, skills }} />}>
-          <Route path="/" element={<ProfilePage profile={profile} education={education} />} />
+          <Route path="/" element={<ProfilePage profile={profile} education={education} projects={projects} skills={skills} certifications={certifications} blog={blog} />} />
           <Route path="/profile" element={<Navigate to="/" replace />} />
           <Route path="/projects" element={<ProjectsPage profile={profile} projects={projects} />} />
           <Route path="/skills" element={<SkillsPage skills={skills} />} />
           <Route path="/certifications" element={<CertificationPage profile={profile} certifications={certifications} />} />
           <Route path="/education" element={<EducationPage education={education} />} />
           <Route path="/blog" element={<BlogPage profile={profile} blog={blog} />} />
+          <Route path="/contact" element={<ContactPage profile={profile} />} />
         </Route>
         <Route path="/admin" element={<AdminPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />

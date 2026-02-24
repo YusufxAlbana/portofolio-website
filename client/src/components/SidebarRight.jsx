@@ -34,15 +34,16 @@ export function SidebarRight({ techStack, profile }) {
         { icon: <Icon.LinkedIn />, name: 'LinkedIn', url: 'https://www.linkedin.com/in/yusuf-nawaf-albana-1b493931b/' },
         { icon: <Icon.MailIcon />, name: 'Email', url: `mailto:${profile?.email}` },
         { icon: <Icon.Phone />, name: 'WhatsApp', url: 'https://wa.me/6285168845761' },
-        { icon: <Icon.Facebook />, name: 'Facebook', url: '' },
-        { icon: <Icon.Instagram />, name: 'Instagram', url: '#' },
+        { icon: <Icon.Facebook />, name: 'Facebook', url: 'https://www.facebook.com/profile.php?id=100090587091557' },
+        { icon: <Icon.Instagram />, name: 'Instagram', url: 'https://www.instagram.com/yusuf_nawaf_albana' },
     ]
 
     return (
         <aside className="sidebar-right">
+            <div className="sidebar-right-doodle"></div>
             {/* Tech Stack */}
             <motion.div
-                className="info-box"
+                className="info-box tech-stack-box"
                 variants={boxVariants}
                 initial="hidden"
                 animate="visible"

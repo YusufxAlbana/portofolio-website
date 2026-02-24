@@ -19,6 +19,7 @@ export function SidebarLeft({ profile }) {
         { id: 'certifications', icon: <Icon.Award />, label: 'Certifications', path: '/certifications' },
         { id: 'education', icon: <Icon.GraduationCap />, label: 'Education', path: '/education' },
         { id: 'blog', icon: <Icon.Edit />, label: 'Blog', path: '/blog' },
+        { id: 'contact', icon: <Icon.Mail />, label: 'Contact', path: '/contact' },
     ]
 
     return (

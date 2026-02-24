@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
+const sharp = require('sharp');
 
 const authRoutes = require('./routes/authRoutes');
 const dataRoutes = require('./routes/dataRoutes');
@@ -16,6 +17,7 @@ const PORT = process.env.PORT || 5000;
 const uploadsDir = path.join(__dirname, 'uploads', 'logos');
 const skillLogosDir = path.join(__dirname, 'uploads', 'skill-logos');
 const certImagesDir = path.join(__dirname, 'uploads', 'cert-images');
+const blogImagesDir = path.join(__dirname, 'uploads', 'blog-images');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
@@ -25,26 +27,16 @@ if (!fs.existsSync(skillLogosDir)) {
 if (!fs.existsSync(certImagesDir)) {
   fs.mkdirSync(certImagesDir, { recursive: true });
 }
+if (!fs.existsSync(blogImagesDir)) {
+  fs.mkdirSync(blogImagesDir, { recursive: true });
+}
 
-// Multer config for general logos
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadsDir),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, `logo-${Date.now()}${ext}`);
-  },
-});
-const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
-
-// Multer config for skill logos
-const skillLogoStorage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, skillLogosDir),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, `skill-${Date.now()}${ext}`);
-  },
-});
-const skillLogoUpload = multer({ storage: skillLogoStorage, limits: { fileSize: 5 * 1024 * 1024 } });
+// Multer config for all uploads using Memory Storage for processing
+const memoryStorage = multer.memoryStorage();
+const upload = multer({ storage: memoryStorage, limits: { fileSize: 5 * 1024 * 1024 } });
+const skillLogoUpload = multer({ storage: memoryStorage, limits: { fileSize: 5 * 1024 * 1024 } });
+const certImageUpload = multer({ storage: memoryStorage, limits: { fileSize: 5 * 1024 * 1024 } });
+const blogImageUpload = multer({ storage: memoryStorage, limits: { fileSize: 5 * 1024 * 1024 } });
 
 // Middleware
 app.use(cors());
@@ -64,45 +56,95 @@ app.use('/api/auth', authRoutes);
 app.use('/api/data', dataRoutes);
 
 // File upload endpoint (general logos)
-app.post('/api/upload', authMiddleware, upload.single('logo'), (req, res) => {
+app.post('/api/upload', authMiddleware, upload.single('logo'), async (req, res) => {
   if (!req.file) {
       console.error('Upload failed: No file received');
       return res.status(400).json({ error: 'No file uploaded' });
   }
-  const fileUrl = `/uploads/logos/${req.file.filename}`;
-  console.log('File uploaded:', fileUrl);
-  res.json({ url: `http://localhost:${PORT}${fileUrl}` });
+  try {
+      const filename = `logo-${Date.now()}-${Math.round(Math.random() * 1000)}.webp`;
+      const filepath = path.join(uploadsDir, filename);
+      await sharp(req.file.buffer)
+          .resize(800, 800, { fit: 'inside', withoutEnlargement: true })
+          .webp({ quality: 80 })
+          .toFile(filepath);
+          
+      const fileUrl = `/uploads/logos/${filename}`;
+      console.log('File uploaded:', fileUrl);
+      res.json({ url: `http://localhost:${PORT}${fileUrl}` });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Failed to process and save image' });
+  }
 });
 
 // Skill logo upload endpoint
-app.post('/api/upload-skill-logo', authMiddleware, skillLogoUpload.single('logo'), (req, res) => {
+app.post('/api/upload-skill-logo', authMiddleware, skillLogoUpload.single('logo'), async (req, res) => {
   if (!req.file) {
       console.error('Skill logo upload failed: No file received');
       return res.status(400).json({ error: 'No file uploaded' });
   }
-  const fileUrl = `/uploads/skill-logos/${req.file.filename}`;
-  console.log('Skill logo uploaded:', fileUrl);
-  res.json({ url: `http://localhost:${PORT}${fileUrl}` });
+  try {
+      const filename = `skill-${Date.now()}-${Math.round(Math.random() * 1000)}.webp`;
+      const filepath = path.join(skillLogosDir, filename);
+      await sharp(req.file.buffer)
+          .resize(500, 500, { fit: 'inside', withoutEnlargement: true })
+          .webp({ quality: 80 })
+          .toFile(filepath);
+          
+      const fileUrl = `/uploads/skill-logos/${filename}`;
+      console.log('Skill logo uploaded:', fileUrl);
+      res.json({ url: `http://localhost:${PORT}${fileUrl}` });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Failed to process and save image' });
+  }
 });
-
-// Multer config for certification images
-const certImageStorage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, certImagesDir),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, `cert-${Date.now()}-${Math.round(Math.random() * 1000)}${ext}`);
-  },
-});
-const certImageUpload = multer({ storage: certImageStorage, limits: { fileSize: 5 * 1024 * 1024 } });
 
 // Certification images upload endpoint (multiple files)
-app.post('/api/upload-cert-images', authMiddleware, certImageUpload.array('images', 10), (req, res) => {
+app.post('/api/upload-cert-images', authMiddleware, certImageUpload.array('images', 10), async (req, res) => {
   if (!req.files || req.files.length === 0) {
       return res.status(400).json({ error: 'No files uploaded' });
   }
-  const urls = req.files.map(f => `http://localhost:${PORT}/uploads/cert-images/${f.filename}`);
-  console.log('Cert images uploaded:', urls);
-  res.json({ urls });
+  try {
+      const urls = await Promise.all(req.files.map(async (file) => {
+          const filename = `cert-${Date.now()}-${Math.round(Math.random() * 1000)}.webp`;
+          const filepath = path.join(certImagesDir, filename);
+          await sharp(file.buffer)
+              .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
+              .webp({ quality: 80 })
+              .toFile(filepath);
+          return `http://localhost:${PORT}/uploads/cert-images/${filename}`;
+      }));
+      console.log('Cert images uploaded:', urls);
+      res.json({ urls });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Failed to process and save images' });
+  }
+});
+
+// Blog images upload endpoint (multiple files)
+app.post('/api/upload-blog-images', authMiddleware, blogImageUpload.array('images', 10), async (req, res) => {
+  if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ error: 'No files uploaded' });
+  }
+  try {
+      const urls = await Promise.all(req.files.map(async (file) => {
+          const filename = `blog-${Date.now()}-${Math.round(Math.random() * 1000)}.webp`;
+          const filepath = path.join(blogImagesDir, filename);
+          await sharp(file.buffer)
+              .resize(1600, 1600, { fit: 'inside', withoutEnlargement: true })
+              .webp({ quality: 80 })
+              .toFile(filepath);
+          return `http://localhost:${PORT}/uploads/blog-images/${filename}`;
+      }));
+      console.log('Blog images uploaded:', urls);
+      res.json({ urls });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Failed to process and save images' });
+  }
 });
 
 app.get('/', (req, res) => {

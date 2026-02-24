@@ -1,20 +1,49 @@
 [
   {
-    "id": "blog-1",
-    "title": "Tech Stack 2026 yang Wajib Dikuasai",
-    "text": "TypeScript — type safety itu penting\nReact / Next.js — still king\nNode.js — versatile backend\nDocker — consistent environments\nAWS / Vercel — deploy anywhere\n\nSetuju gak? #WebDev #FullStack",
-    "time": 1770944432908
+    "id": "blo-1771898758472",
+    "title": "IDN Goes to Society",
+    "text": "10 grade Program to interact with the people around the school, we were given one week to get to acquaintance 80 people and take photos with them as proof if were really doing this program. Each team  there are three people. Alhamdulillah, we acquaintance 60 people with the documentation. We were also must to stay at mosque and participate in mosque activities, such as teaching children to reading Quran and giving short advice to prayers.",
+    "images": [
+      "http://localhost:5000/uploads/blog-images/blog-1771898749189-467.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771898756698-242.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771898756717-958.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771898756748-30.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771898756810-115.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771899328293-338.jpg"
+    ],
+    "time": 1771898758472
   },
   {
-    "id": "blog-2",
-    "title": "Clean Code itu Investasi",
-    "text": "Banyak developer fokus bikin fitur tapi lupa maintainability. Code yang clean itu bukan soal pamer, tapi soal respek ke tim dan future-self.\n\nBeberapa prinsip yang selalu saya pegang:\n• Single Responsibility\n• DRY (Don't Repeat Yourself)\n• KISS (Keep It Simple)\n• Meaningful naming\n\n#CleanCode #BestPractices",
-    "time": 1770771632908
+    "id": "blo-1771900020149",
+    "title": "IDN Teaching - Kediri, SMP Pawyatan Daha 2",
+    "text": "On the 21st–25th of 2025 when i'm 10 grade, we doing an IDN teaching program. The goal of this program was to build students' confidence in speaking in front of an audience or students. Me with three my friends, we chose the themes of HTML, CSS, JavaScript/Website Fundamentals, and AI. The program for one week, and we stayed at a mosque near the school.",
+    "images": [
+      "http://localhost:5000/uploads/blog-images/blog-1771899753170-516.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771899761197-902.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771899761222-656.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771899761232-339.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771899761240-889.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771899761258-933.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771899761270-195.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771899761292-655.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771899761298-10.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771899761307-804.jpg"
+    ],
+    "time": 1771900020149
   },
   {
-    "id": "blog-3",
-    "title": "Kenapa Saya Pilih React dibanding Framework Lain",
-    "text": "Setelah explore Vue, Angular, dan Svelte, React tetap jadi pilihan utama saya. Alasannya:\n\n• Ekosistem paling mature\n• Community support luar biasa\n• Next.js = game changer\n• Hooks bikin code lebih clean\n• Job market masih dominan\n\nBukan berarti framework lain jelek, tapi React paling cocok buat workflow saya. #React #WebDev",
-    "time": 1770166832908
+    "id": "blo-1771900585523",
+    "title": "LDKS - basic student leadership training - the beginning of IDN Batch 4",
+    "text": "When we first arrived in IDN school, we were divided into several groups and the next day we quickly left going to the park place, i think the place is like a small hill in Indoensia, we spent three days doing activities organized by the IDN student council and also the teacher.\n\npardon me for the little documentation of the activities, our teacher did not share it with the student.",
+    "images": [
+      "http://localhost:5000/uploads/blog-images/blog-1771900299773-596.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771900299798-389.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771900299821-499.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771900299841-421.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771900299862-930.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771900299882-560.jpg",
+      "http://localhost:5000/uploads/blog-images/blog-1771900299900-885.jpg"
+    ],
+    "time": 1771900585523
   }
 ]

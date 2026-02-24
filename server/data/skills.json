@@ -3,75 +3,67 @@
   "techStack": [
     {
       "name": "React",
-      "logo": ""
+      "logo": "http://localhost:5000/uploads/skill-logos/skill-1771811153544.png"
     },
     {
       "name": "JavaScript",
-      "logo": ""
+      "logo": "http://localhost:5000/uploads/skill-logos/skill-1771811217842.png"
     },
     {
       "name": "Node.js",
-      "logo": ""
+      "logo": "http://localhost:5000/uploads/skill-logos/skill-1771811252759.png"
     },
     {
       "name": "Python",
-      "logo": ""
-    },
-    {
-      "name": "AWS",
-      "logo": ""
+      "logo": "http://localhost:5000/uploads/skill-logos/skill-1771811296991.png"
     },
     {
       "name": "Firebase",
-      "logo": ""
-    },
-    {
-      "name": "Linux",
-      "logo": ""
+      "logo": "http://localhost:5000/uploads/skill-logos/skill-1771811594693.svg"
     },
     {
       "name": "Git",
-      "logo": ""
+      "logo": "http://localhost:5000/uploads/skill-logos/skill-1771811543650.webp"
     },
     {
       "name": "Tailwind",
-      "logo": ""
+      "logo": "http://localhost:5000/uploads/skill-logos/skill-1771811501432.png"
     },
     {
       "name": "CSS3",
-      "logo": ""
+      "logo": "http://localhost:5000/uploads/skill-logos/skill-1771811440695.png"
     },
     {
       "name": "HTML5",
-      "logo": ""
+      "logo": "http://localhost:5000/uploads/skill-logos/skill-1771811433702.png"
     },
     {
       "name": "REST API",
-      "logo": ""
+      "logo": "http://localhost:5000/uploads/skill-logos/skill-1771811922681.png"
     },
     {
       "name": "Figma",
-      "logo": ""
+      "logo": "http://localhost:5000/uploads/skill-logos/skill-1771811632595.svg"
     },
     {
       "name": "Canva",
-      "logo": ""
+      "logo": "http://localhost:5000/uploads/skill-logos/skill-1771811678748.svg"
     },
     {
       "name": "Supabase",
-      "logo": ""
+      "logo": "http://localhost:5000/uploads/skill-logos/skill-1771811724600.png"
     },
     {
       "name": "PHP",
-      "logo": ""
+      "logo": "http://localhost:5000/uploads/skill-logos/skill-1771811761666.png"
     },
     {
       "name": "Flutter",
-      "logo": ""
+      "logo": "http://localhost:5000/uploads/skill-logos/skill-1771811825108.png"
     },
     {
       "name": "Dart",
-      "logo": ""
+      "logo": "http://localhost:5000/uploads/skill-logos/skill-1771811852750.png"
     }
   ]
 }
