@@ -13,7 +13,7 @@ import { CertificationPage } from './pages/CertificationPage'
 import { EducationPage } from './pages/EducationPage'
 import { ContactPage } from './pages/ContactPage'
 
-const API = 'http://localhost:5000/api'
+const API = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api')
 
 /* ─── Layout ───────────────────────────────────────── */
 
@@ -61,12 +61,12 @@ function App() {
     const fetchData = async () => {
       try {
         const [profileRes, projectsRes, blogRes, skillsRes, certRes, eduRes] = await Promise.all([
-          fetch('/data/profile.json'),
-          fetch('/data/projects.json'),
-          fetch('/data/blog.json'),
-          fetch('/data/skills.json'),
-          fetch('/data/certifications.json'),
-          fetch('/data/education.json'),
+          fetch(`${API}/data/profile`),
+          fetch(`${API}/data/projects`),
+          fetch(`${API}/data/blog`),
+          fetch(`${API}/data/skills`),
+          fetch(`${API}/data/certifications`),
+          fetch(`${API}/data/education`),
         ])
 
         if (!profileRes.ok || !projectsRes.ok || !blogRes.ok || !skillsRes.ok || !certRes.ok || !eduRes.ok) throw new Error('API Error')

@@ -5,6 +5,7 @@ const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
 const sharp = require('sharp');
+const mongoose = require('mongoose');
 
 const authRoutes = require('./routes/authRoutes');
 const dataRoutes = require('./routes/dataRoutes');
@@ -12,6 +13,12 @@ const authMiddleware = require('./middleware/auth');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('Connected to MongoDB Atlas'))
+  .catch((err) => console.error('MongoDB connection error:', err));
+
 
 // Ensure uploads directories exist
 const uploadsDir = path.join(__dirname, '..', 'client', 'public', 'uploads', 'logos');
@@ -33,10 +40,10 @@ if (!fs.existsSync(blogImagesDir)) {
 
 // Multer config for all uploads using Memory Storage for processing
 const memoryStorage = multer.memoryStorage();
-const upload = multer({ storage: memoryStorage, limits: { fileSize: 5 * 1024 * 1024 } });
-const skillLogoUpload = multer({ storage: memoryStorage, limits: { fileSize: 5 * 1024 * 1024 } });
-const certImageUpload = multer({ storage: memoryStorage, limits: { fileSize: 5 * 1024 * 1024 } });
-const blogImageUpload = multer({ storage: memoryStorage, limits: { fileSize: 5 * 1024 * 1024 } });
+const upload = multer({ storage: memoryStorage, limits: { fileSize: 25 * 1024 * 1024 } });
+const skillLogoUpload = multer({ storage: memoryStorage, limits: { fileSize: 25 * 1024 * 1024 } });
+const certImageUpload = multer({ storage: memoryStorage, limits: { fileSize: 25 * 1024 * 1024 } });
+const blogImageUpload = multer({ storage: memoryStorage, limits: { fileSize: 25 * 1024 * 1024 } });
 
 // Middleware
 app.use(cors());
@@ -55,6 +62,27 @@ app.use('/uploads', express.static(path.join(__dirname, '..', 'client', 'public'
 app.use('/api/auth', authRoutes);
 app.use('/api/data', dataRoutes);
 
+// ─── Cloudinary Storage Helper ───
+const cloudinary = require('cloudinary').v2;
+cloudinary.config(true); // Automatically loads CLOUDINARY_URL from .env
+
+async function uploadToCloudinary(buffer, folder) {
+    return new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+            {
+                folder: `portfolio/${folder}`,
+                resource_type: 'image',
+                timeout: 120000 // Increased timeout to 120 seconds
+            },
+            (error, result) => {
+                if (error) reject(error);
+                else resolve(result.secure_url);
+            }
+        );
+        uploadStream.end(buffer);
+    });
+}
+
 // File upload endpoint (general logos)
 app.post('/api/upload', authMiddleware, upload.single('logo'), async (req, res) => {
   if (!req.file) {
@@ -62,14 +90,13 @@ app.post('/api/upload', authMiddleware, upload.single('logo'), async (req, res) 
       return res.status(400).json({ error: 'No file uploaded' });
   }
   try {
-      const filename = `logo-${Date.now()}-${Math.round(Math.random() * 1000)}.webp`;
-      const filepath = path.join(uploadsDir, filename);
-      await sharp(req.file.buffer)
-          .resize(800, 800, { fit: 'inside', withoutEnlargement: true })
-          .webp({ quality: 80 })
-          .toFile(filepath);
-          
-      const fileUrl = `/uploads/logos/${filename}`;
+      const buffer = await sharp(req.file.buffer)
+          .resize(500, 500, { fit: 'inside', withoutEnlargement: true }) // Compressed
+          .webp({ quality: 70 })
+          .toBuffer();
+
+      const fileUrl = await uploadToCloudinary(buffer, 'logos');
+      
       console.log('File uploaded:', fileUrl);
       res.json({ url: fileUrl });
   } catch (err) {
@@ -85,14 +112,13 @@ app.post('/api/upload-skill-logo', authMiddleware, skillLogoUpload.single('logo'
       return res.status(400).json({ error: 'No file uploaded' });
   }
   try {
-      const filename = `skill-${Date.now()}-${Math.round(Math.random() * 1000)}.webp`;
-      const filepath = path.join(skillLogosDir, filename);
-      await sharp(req.file.buffer)
-          .resize(500, 500, { fit: 'inside', withoutEnlargement: true })
-          .webp({ quality: 80 })
-          .toFile(filepath);
+      const buffer = await sharp(req.file.buffer)
+          .resize(300, 300, { fit: 'inside', withoutEnlargement: true }) // Compressed
+          .webp({ quality: 70 })
+          .toBuffer();
+
+      const fileUrl = await uploadToCloudinary(buffer, 'skill-logos');
           
-      const fileUrl = `/uploads/skill-logos/${filename}`;
       console.log('Skill logo uploaded:', fileUrl);
       res.json({ url: fileUrl });
   } catch (err) {
@@ -107,20 +133,21 @@ app.post('/api/upload-cert-images', authMiddleware, certImageUpload.array('image
       return res.status(400).json({ error: 'No files uploaded' });
   }
   try {
-      const urls = await Promise.all(req.files.map(async (file) => {
-          const filename = `cert-${Date.now()}-${Math.round(Math.random() * 1000)}.webp`;
-          const filepath = path.join(certImagesDir, filename);
-          await sharp(file.buffer)
-              .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
-              .webp({ quality: 80 })
-              .toFile(filepath);
-          return `/uploads/cert-images/${filename}`;
-      }));
+      const urls = [];
+      // Use sequential upload instead of Promise.all to avoid Cloudinary timeouts on multiple large files
+      for (const file of req.files) {
+          const buffer = await sharp(file.buffer)
+              .resize(800, 800, { fit: 'inside', withoutEnlargement: true }) // Compressed
+              .webp({ quality: 70 })
+              .toBuffer();
+          const url = await uploadToCloudinary(buffer, 'cert-images');
+          urls.push(url);
+      }
       console.log('Cert images uploaded:', urls);
       res.json({ urls });
   } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Failed to process and save images' });
+      console.error('UPLOAD ERROR:', err);
+      res.status(500).json({ error: 'Failed to process and save images', details: err.message });
   }
 });
 
@@ -130,20 +157,20 @@ app.post('/api/upload-blog-images', authMiddleware, blogImageUpload.array('image
       return res.status(400).json({ error: 'No files uploaded' });
   }
   try {
-      const urls = await Promise.all(req.files.map(async (file) => {
-          const filename = `blog-${Date.now()}-${Math.round(Math.random() * 1000)}.webp`;
-          const filepath = path.join(blogImagesDir, filename);
-          await sharp(file.buffer)
-              .resize(1600, 1600, { fit: 'inside', withoutEnlargement: true })
-              .webp({ quality: 80 })
-              .toFile(filepath);
-          return `/uploads/blog-images/${filename}`;
-      }));
+      const urls = [];
+      for (const file of req.files) {
+          const buffer = await sharp(file.buffer)
+              .resize(1000, 1000, { fit: 'inside', withoutEnlargement: true }) // Compressed
+              .webp({ quality: 70 })
+              .toBuffer();
+          const url = await uploadToCloudinary(buffer, 'blog-images');
+          urls.push(url);
+      }
       console.log('Blog images uploaded:', urls);
       res.json({ urls });
   } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Failed to process and save images' });
+      console.error('UPLOAD ERROR:', err);
+      res.status(500).json({ error: 'Failed to process and save images', details: err.message });
   }
 });
 

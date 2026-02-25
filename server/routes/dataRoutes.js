@@ -1,150 +1,189 @@
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
 const authMiddleware = require('../middleware/auth');
 const router = express.Router();
+const Models = require('../models/DataModels');
 
-const DATA_DIR = path.join(__dirname, '..', '..', 'client', 'public', 'data');
-
-// Helper: read JSON file
-function readData(type) {
-  const filePath = path.join(DATA_DIR, `${type}.json`);
-  if (!fs.existsSync(filePath)) return null;
-  const raw = fs.readFileSync(filePath, 'utf-8');
-  return JSON.parse(raw);
-}
-
-// Helper: write JSON file
-function writeData(type, data) {
-  const filePath = path.join(DATA_DIR, `${type}.json`);
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
-}
+// Helper to map route parameter to Mongoose Model
+const getModel = (type) => {
+    switch(type) {
+        case 'projects': return Models.Project;
+        case 'blog': return Models.Blog;
+        case 'certifications': return Models.Certification;
+        case 'education': return Models.Education;
+        case 'messages': return Models.Message;
+        case 'profile': return Models.Profile;
+        case 'skills': return Models.Skill;
+        default: return null;
+    }
+};
 
 // Valid data types
 const VALID_TYPES = ['projects', 'blog', 'skills', 'profile', 'messages', 'certifications', 'education'];
 
 // ─── GET /api/data/:type — PUBLIC (no auth) ───────
-router.get('/:type', (req, res) => {
+router.get('/:type', async (req, res) => {
   const { type } = req.params;
+  const Model = getModel(type);
 
-  if (!VALID_TYPES.includes(type)) {
+  if (!Model) {
     return res.status(400).json({ error: `Invalid type: ${type}` });
   }
 
-  const data = readData(type);
-  if (data === null) {
-    return res.status(404).json({ error: `Data not found: ${type}` });
+  try {
+      if (type === 'profile' || type === 'skills') {
+          // Singleton documents
+          const doc = await Model.findOne({ id: 'singleton' }).lean();
+          if (!doc) {
+               return res.status(404).json({ error: `Data not found: ${type}` });
+          }
+          // Remove internal mongodb _id before sending
+          delete doc._id;
+          delete doc.__v;
+          return res.json(doc);
+      } else {
+          // Collections (arrays)
+          const docs = await Model.find().sort({ time: -1 }).lean();
+          
+          const formattedData = docs.map(doc => {
+              delete doc._id;
+              delete doc.__v;
+              return doc;
+          });
+          
+          return res.json(formattedData);
+      }
+  } catch (error) {
+      console.error('Error fetching data:', error);
+      res.status(500).json({ error: 'Failed to fetch data' });
   }
-
-  res.json(data);
 });
 
 // ─── POST /api/data/messages — PUBLIC (contact form) ──
-router.post('/messages', (req, res) => {
+router.post('/messages', async (req, res) => {
   const { name, email, message } = req.body;
 
   if (!name || !email || !message) {
       return res.status(400).json({ error: 'Name, email, and message are required' });
   }
 
-  const messages = readData('messages') || [];
-  const newMessage = {
-      id: Date.now().toString(),
-      name,
-      email,
-      message,
-      time: Date.now(),
-  };
+  try {
+      const newMessage = new Models.Message({
+          id: Date.now().toString(),
+          name,
+          email,
+          message,
+          time: Date.now(),
+      });
 
-  messages.push(newMessage);
-  writeData('messages', messages);
-
-  res.status(201).json({ message: 'Message sent successfully', data: newMessage });
+      await newMessage.save();
+      
+      const responseData = newMessage.toObject();
+      delete responseData._id;
+      delete responseData.__v;
+      
+      res.status(201).json({ message: 'Message sent successfully', data: responseData });
+  } catch (error) {
+      console.error('Error sending message:', error);
+      res.status(500).json({ error: 'Failed to send message' });
+  }
 });
 
 // ─── POST /api/data/:type — ADMIN (add item) ─────
-router.post('/:type', authMiddleware, (req, res) => {
+router.post('/:type', authMiddleware, async (req, res) => {
   const { type } = req.params;
+  const Model = getModel(type);
 
-  if (!VALID_TYPES.includes(type)) {
+  if (!Model) {
     return res.status(400).json({ error: `Invalid type: ${type}` });
   }
 
-  // Profile is an object, not an array
-  if (type === 'profile') {
-    writeData(type, req.body);
-    return res.json({ message: 'Profile updated', data: req.body });
+  try {
+      if (type === 'profile' || type === 'skills') {
+          // Find and update, or insert if not exists
+          const doc = await Model.findOneAndUpdate(
+              { id: 'singleton' },
+              { ...req.body, id: 'singleton' },
+              { new: true, upsert: true, setDefaultsOnInsert: true }
+          ).lean();
+
+          delete doc._id;
+          delete doc.__v;
+          
+          return res.json({ message: `${type} updated`, data: doc });
+      }
+
+      // Arrays (projects, blog, etc)
+      const newItemData = {
+        id: `${type.slice(0, -1)}-${Date.now()}`,
+        ...req.body,
+        time: Date.now(), // Always set time to current timestamp
+      };
+
+      // Remove stats if they were sent
+      delete newItemData.stats;
+
+      const newItem = new Model(newItemData);
+      await newItem.save();
+      
+      const responseData = newItem.toObject();
+      delete responseData._id;
+      delete responseData.__v;
+
+      res.status(201).json({ message: 'Item added', data: responseData });
+  } catch (error) {
+      console.error('Error adding item:', error);
+      res.status(500).json({ error: 'Failed to add item' });
   }
-
-  // Skills is a special structure
-  if (type === 'skills') {
-    writeData(type, req.body);
-    return res.json({ message: 'Skills updated', data: req.body });
-  }
-
-  // Projects and blog are arrays
-  const data = readData(type);
-  if (!Array.isArray(data)) {
-    return res.status(500).json({ error: 'Data format error' });
-  }
-
-  const newItem = {
-    id: `${type.slice(0, -1)}-${Date.now()}`,
-    ...req.body,
-    time: Date.now(), // Always set time to current timestamp
-  };
-
-  // Remove stats if they were sent (just in case)
-  delete newItem.stats;
-
-  data.push(newItem);
-  writeData(type, data);
-  res.status(201).json({ message: 'Item added', data: newItem });
 });
 
 // ─── PUT /api/data/:type/:id — ADMIN (edit item) ──
-router.put('/:type/:id', authMiddleware, (req, res) => {
+router.put('/:type/:id', authMiddleware, async (req, res) => {
   const { type, id } = req.params;
+  const Model = getModel(type);
 
-  if (!VALID_TYPES.includes(type)) {
+  if (!Model) {
     return res.status(400).json({ error: `Invalid type: ${type}` });
   }
 
-  // Profile update
-  if (type === 'profile') {
-    const profile = readData(type);
-    const updated = { ...profile, ...req.body };
-    writeData(type, updated);
-    return res.json({ message: 'Profile updated', data: updated });
-  }
+  try {
+      if (type === 'profile' || type === 'skills') {
+          // Singleton update
+          const doc = await Model.findOneAndUpdate(
+              { id: 'singleton' },
+              { $set: req.body },
+              { new: true }
+          ).lean();
+          
+          if (!doc) return res.status(404).json({ error: `Item not found` });
+          delete doc._id; delete doc.__v;
+          
+          return res.json({ message: `${type} updated`, data: doc });
+      }
 
-  // Skills update
-  if (type === 'skills') {
-    writeData(type, req.body);
-    return res.json({ message: 'Skills updated', data: req.body });
-  }
+      const doc = await Model.findOneAndUpdate(
+          { id: id },
+          { $set: req.body },
+          { new: true }
+      ).lean();
+      
+      if (!doc) {
+        return res.status(404).json({ error: `Item not found: ${id}` });
+      }
 
-  // Array types (projects, blog)
-  const data = readData(type);
-  if (!Array.isArray(data)) {
-    return res.status(500).json({ error: 'Data format error' });
+      delete doc._id; delete doc.__v;
+      res.json({ message: 'Item updated', data: doc });
+  } catch (error) {
+      console.error('Error updating item:', error);
+      res.status(500).json({ error: 'Failed to update item' });
   }
-
-  const index = data.findIndex(item => item.id === id);
-  if (index === -1) {
-    return res.status(404).json({ error: `Item not found: ${id}` });
-  }
-
-  data[index] = { ...data[index], ...req.body };
-  writeData(type, data);
-  res.json({ message: 'Item updated', data: data[index] });
 });
 
 // ─── DELETE /api/data/:type/:id — ADMIN (delete) ──
-router.delete('/:type/:id', authMiddleware, (req, res) => {
+router.delete('/:type/:id', authMiddleware, async (req, res) => {
   const { type, id } = req.params;
+  const Model = getModel(type);
 
-  if (!VALID_TYPES.includes(type)) {
+  if (!Model) {
     return res.status(400).json({ error: `Invalid type: ${type}` });
   }
 
@@ -152,19 +191,19 @@ router.delete('/:type/:id', authMiddleware, (req, res) => {
     return res.status(400).json({ error: 'Cannot delete profile or skills, use PUT to update' });
   }
 
-  const data = readData(type);
-  if (!Array.isArray(data)) {
-    return res.status(500).json({ error: 'Data format error' });
-  }
+  try {
+      const doc = await Model.findOneAndDelete({ id: id }).lean();
+      
+      if (!doc) {
+        return res.status(404).json({ error: `Item not found: ${id}` });
+      }
 
-  const index = data.findIndex(item => item.id === id);
-  if (index === -1) {
-    return res.status(404).json({ error: `Item not found: ${id}` });
+      delete doc._id; delete doc.__v;
+      res.json({ message: 'Item deleted', data: doc }); 
+  } catch (error) {
+      console.error('Error deleting item:', error);
+      res.status(500).json({ error: 'Failed to delete item' });
   }
-
-  const deleted = data.splice(index, 1)[0];
-  writeData(type, data);
-  res.json({ message: 'Item deleted', data: deleted });
 });
 
 module.exports = router;
