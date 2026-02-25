@@ -20,24 +20,8 @@ mongoose.connect(process.env.MONGODB_URI)
   .catch((err) => console.error('MongoDB connection error:', err));
 
 
-// Ensure uploads directories exist
-const uploadsDir = path.join(__dirname, '..', 'client', 'public', 'uploads', 'logos');
-const skillLogosDir = path.join(__dirname, '..', 'client', 'public', 'uploads', 'skill-logos');
-const certImagesDir = path.join(__dirname, '..', 'client', 'public', 'uploads', 'cert-images');
-const blogImagesDir = path.join(__dirname, '..', 'client', 'public', 'uploads', 'blog-images');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
-}
-if (!fs.existsSync(skillLogosDir)) {
-  fs.mkdirSync(skillLogosDir, { recursive: true });
-}
-if (!fs.existsSync(certImagesDir)) {
-  fs.mkdirSync(certImagesDir, { recursive: true });
-}
-if (!fs.existsSync(blogImagesDir)) {
-  fs.mkdirSync(blogImagesDir, { recursive: true });
-}
-
+// Ensure uploads directories exist (Disabled for Vercel since file system is read-only and using MemoryStorage)
+// We are using Cloudinary for storage, so local directories are not needed in production.
 // Multer config for all uploads using Memory Storage for processing
 const memoryStorage = multer.memoryStorage();
 const upload = multer({ storage: memoryStorage, limits: { fileSize: 25 * 1024 * 1024 } });
