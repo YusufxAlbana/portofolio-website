@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-width=1.0">
     <title>Yusuf Albana (@yusufxalbana) / X Portfolio</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="./assets/logo%20YNA.svg">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -75,7 +77,7 @@
             <div class="w-full flex flex-col items-center xl:items-start gap-1">
                 <!-- Logo -->
                 <a href="#" class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-x-hover transition duration-200 mb-2 xl:ml-2">
-                    <i class="fa-brands fa-x-twitter text-3xl"></i>
+                    <img src="./assets/logo%20YNA.svg" alt="YNA Logo" class="w-8 h-8 xl:w-9 xl:h-9">
                 </a>
                 
                 <!-- Nav Links -->
@@ -96,10 +98,18 @@
                 </nav>
 
                 <!-- CV Button -->
-                <button class="w-12 h-12 xl:w-[90%] xl:h-[52px] bg-x-blue hover:bg-x-blueHover text-white rounded-full font-bold text-[17px] mt-4 shadow-md transition duration-200 flex items-center justify-center">
+                <a href="./assets/CV%20YNA.png" download class="w-12 h-12 xl:w-[90%] xl:h-[52px] bg-x-blue hover:bg-x-blueHover text-white rounded-full font-bold text-[17px] mt-4 shadow-md transition duration-200 flex items-center justify-center">
                     <i class="fa-solid fa-file-pdf xl:hidden text-xl"></i>
-                    <span class="hidden xl:block">CV</span>
-                </button>
+                    <span class="hidden xl:block">Download CV</span>
+                </a>
+
+                <!-- CV Preview Image -->
+                <div class="hidden xl:block w-[90%] mt-4 cursor-pointer overflow-hidden rounded-xl border border-x-border hover:opacity-80 transition duration-200 group relative" onclick="openCvModal()">
+                    <img src="./assets/CV%20YNA.png" alt="CV Preview" class="w-full h-auto">
+                    <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-200">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white text-3xl"></i>
+                    </div>
+                </div>
             </div>
 
             <!-- User Mini Profile -->
@@ -231,13 +241,13 @@
             </div>
 
             <div class="cloak" id="right-sidebar-content">
-                <!-- Subscribe Card -->
-                <div class="bg-x-darkGray rounded-2xl p-4 mb-4 mt-2">
-                    <h2 class="font-extrabold text-[20px] mb-2 leading-6">Subscribe to Premium</h2>
-                    <p class="text-[15px] mb-3 leading-snug">Subscribe to unlock new features and if eligible, receive a share of ads revenue.</p>
-                    <button class="bg-x-blue hover:bg-x-blueHover text-white font-bold py-1.5 px-4 rounded-full text-[15px] transition duration-200">
-                        Subscribe
-                    </button>
+                <!-- Hire/Contact Card -->
+                <div class="bg-x-darkGray rounded-2xl p-4 mb-4 mt-2 border border-x-border">
+                    <h2 class="font-extrabold text-[20px] mb-2 leading-6">Let's Connect!</h2>
+                    <p class="text-[15px] mb-3 leading-snug">I'm currently looking for full-time opportunities. Let's build something amazing together.</p>
+                    <a href="mailto:your.email@example.com" class="inline-block text-center bg-x-blue hover:bg-x-blueHover text-white font-bold py-1.5 px-4 rounded-full text-[15px] transition duration-200">
+                        Hire Me
+                    </a>
                 </div>
 
                 <!-- Skills Card -->
@@ -248,16 +258,7 @@
                     </div>
                 </div>
 
-                <!-- Who to follow Card -->
-                <div class="bg-x-darkGray rounded-2xl pt-3 overflow-hidden mb-4">
-                    <h2 class="font-extrabold text-[20px] px-4 mb-3">Who to follow</h2>
-                    <div id="suggestions-container">
-                        <!-- Suggestions inserted by JS -->
-                    </div>
-                    <a href="#" class="block p-4 text-x-blue hover:bg-x-hover transition duration-200 text-[15px]">
-                        Show more
-                    </a>
-                </div>
+
 
                 <!-- Footer Links -->
                 <div class="flex flex-wrap gap-x-3 gap-y-1 px-4 text-[13px] text-x-textDim">
@@ -272,6 +273,16 @@
             </div>
         </aside>
 
+    </div>
+
+    <!-- CV Fullscreen Modal -->
+    <div id="cv-modal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8 cursor-zoom-out" onclick="closeCvModal()">
+        <button onclick="closeCvModal()" class="absolute top-4 right-4 sm:top-6 sm:right-6 w-12 h-12 bg-x-darkGray/80 hover:bg-x-border rounded-full flex items-center justify-center text-white transition duration-200 z-50 cursor-pointer">
+            <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+        <div class="max-w-4xl w-full max-h-full overflow-y-auto overflow-x-hidden rounded-xl border border-x-border shadow-2xl cursor-default" onclick="event.stopPropagation()">
+            <img src="./assets/CV%20YNA.png" alt="CV Full Preview" class="w-full h-auto block">
+        </div>
     </div>
 
     <script src="js/app.js"></script>

@@ -12,8 +12,7 @@ async function fetchData() {
             fetch('./data/projects.json'),
             fetch('./data/skills.json'),
             fetch('./data/education.json'),
-            fetch('./data/trending.json'),
-            fetch('./data/suggestions.json')
+            fetch('./data/trending.json')
         ]);
 
         if (!profileRes.ok) throw new Error('Failed to load data files');
@@ -24,7 +23,6 @@ async function fetchData() {
         const skillsData = await skillsRes.json();
         const eduData = await eduRes.json();
         const trendingData = await trendingRes.json();
-        const suggestData = await suggestRes.json();
 
         portfolioData = {
             profile: profileData.profile,
@@ -32,14 +30,13 @@ async function fetchData() {
             projects: projectsData.projects,
             skills: skillsData.skills,
             education: eduData.education,
-            trending: trendingData.trending,
-            suggestions: suggestData.suggestions
+            trending: trendingData.trending
         };
         
         renderProfile(portfolioData.profile);
         renderPosts(portfolioData.tweets);
         renderSidebarSkills(portfolioData.skills);
-        renderSuggestions(portfolioData.suggestions);
+
 
         setupNavigation();
 
@@ -139,28 +136,7 @@ function renderPosts(posts) {
 
 
 
-function renderSuggestions(suggestions) {
-    const container = document.getElementById('suggestions-container');
-    container.innerHTML = '';
 
-    suggestions.forEach(suggestion => {
-        const suggestionHtml = `
-            <div class="px-4 py-3 hover:bg-x-hover transition duration-200 cursor-pointer flex justify-between items-center bg-x-darkGray">
-                <div class="flex items-center gap-3">
-                    <img src="${suggestion.avatar}" alt="${suggestion.name}" class="w-10 h-10 rounded-full object-cover">
-                    <div class="flex flex-col">
-                        <span class="font-bold text-[15px] hover:underline">${suggestion.name}</span>
-                        <span class="text-x-textDim text-[15px]">${suggestion.handle}</span>
-                    </div>
-                </div>
-                <button class="bg-white hover:bg-gray-200 text-black font-bold py-1.5 px-4 rounded-full text-[14px] transition duration-200">
-                    Follow
-                </button>
-            </div>
-        `;
-        container.insertAdjacentHTML('beforeend', suggestionHtml);
-    });
-}
 
 function setupNavigation() {
     const navLinks = document.querySelectorAll('.nav-link');
@@ -328,3 +304,20 @@ function renderEducation(education) {
         container.insertAdjacentHTML('beforeend', eduHtml);
     });
 }
+
+// CV Modal Logic
+window.openCvModal = function() {
+    const modal = document.getElementById('cv-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+};
+
+window.closeCvModal = function() {
+    const modal = document.getElementById('cv-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = ''; // Restore background scrolling
+    }
+};
