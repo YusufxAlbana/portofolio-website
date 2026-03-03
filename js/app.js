@@ -283,7 +283,7 @@ function renderSidebarSkills(skills) {
     
     skills.forEach(skillGroup => {
         const skillsHtml = skillGroup.items.map(s => `
-            <div class="bg-x-darkGray rounded-full px-3 py-1.5 text-[13px] font-medium text-white border border-x-border hover:bg-x-hover transition duration-200 cursor-default">
+            <div class="bg-black rounded-full px-3 py-1.5 text-[13px] font-medium text-white border border-x-border hover:bg-x-hover transition duration-200 cursor-default">
                 ${s}
             </div>
         `).join('');
