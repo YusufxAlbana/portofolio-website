@@ -73,7 +73,7 @@
     <div class="max-w-[1280px] mx-auto flex justify-center min-h-screen">
         
         <!-- Left Sidebar (Navigation) -->
-        <header class="w-[88px] xl:w-[275px] flex flex-col items-center xl:items-start xl:px-3 py-2 border-r border-x-border shrink-0">
+        <header class="w-[88px] xl:w-[275px] flex flex-col items-center xl:items-start xl:px-3 py-2 border-r border-x-border shrink-0 sticky top-0 h-screen overflow-y-auto">
             <div class="w-full flex flex-col items-center xl:items-start gap-1">
                 <!-- Logo -->
                 <a href="#" class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-x-hover transition duration-200 mb-2 xl:ml-2">
@@ -98,14 +98,14 @@
                 </nav>
 
                 <!-- CV Button -->
-                <a href="./assets/CV%20YNA.png" download class="w-12 h-12 xl:w-[90%] xl:h-[52px] bg-x-blue hover:bg-x-blueHover text-white rounded-full font-bold text-[17px] mt-4 shadow-md transition duration-200 flex items-center justify-center">
+                <a href="./assets/CV%20YNA.webp" download class="w-12 h-12 xl:w-[90%] xl:h-[52px] bg-x-blue hover:bg-x-blueHover text-white rounded-full font-bold text-[17px] mt-4 shadow-md transition duration-200 flex items-center justify-center">
                     <i class="fa-solid fa-file-pdf xl:hidden text-xl"></i>
                     <span class="hidden xl:block">Download CV</span>
                 </a>
 
                 <!-- CV Preview Image -->
                 <div class="hidden xl:block w-[90%] mt-4 cursor-pointer overflow-hidden rounded-xl border border-x-border hover:opacity-80 transition duration-200 group relative" onclick="openCvModal()">
-                    <img src="./assets/CV%20YNA.png" alt="CV Preview" class="w-full h-auto">
+                    <img src="./assets/CV%20YNA.webp" alt="CV Preview" class="w-full h-auto">
                     <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-200">
                         <i class="fa-solid fa-magnifying-glass-plus text-white text-3xl"></i>
                     </div>
@@ -231,15 +231,7 @@
         </main>
 
         <!-- Right Sidebar (Trends/Suggestions) -->
-        <aside class="hidden lg:block w-[350px] pl-8 shrink-0 pb-10">
-            <!-- Search Bar -->
-            <div class="relative py-1 bg-black z-10 top-0 sticky pt-2 pb-3">
-                <div class="flex items-center bg-[#202327] rounded-full h-[44px] group focus-within:bg-black focus-within:border focus-within:border-x-blue">
-                    <i class="fa-solid fa-magnifying-glass text-x-textDim ml-5 group-focus-within:text-x-blue transition duration-200"></i>
-                    <input type="text" placeholder="Search" class="bg-transparent border-none outline-none text-[15px] ml-4 text-white w-full placeholder:text-x-textDim">
-                </div>
-            </div>
-
+        <aside class="hidden lg:block w-[350px] pl-8 shrink-0 pb-10 sticky top-0 h-screen overflow-y-auto pt-4">
             <div class="cloak" id="right-sidebar-content">
                 <!-- Hire/Contact Card -->
                 <div class="bg-x-darkGray rounded-2xl p-4 mb-4 mt-2 border border-x-border">
@@ -262,13 +254,12 @@
 
                 <!-- Footer Links -->
                 <div class="flex flex-wrap gap-x-3 gap-y-1 px-4 text-[13px] text-x-textDim">
-                    <a href="#" class="hover:underline">Terms of Service</a>
-                    <a href="#" class="hover:underline">Privacy Policy</a>
-                    <a href="#" class="hover:underline">Cookie Policy</a>
-                    <a href="#" class="hover:underline">Accessibility</a>
-                    <a href="#" class="hover:underline">Ads info</a>
-                    <a href="#" class="hover:underline">More ...</a>
-                    <span>© 2026 X Corp. (Clone)</span>
+                    <a href="https://github.com/yusufxalbana" target="_blank" class="hover:underline">GitHub</a>
+                    <a href="#" target="_blank" class="hover:underline">LinkedIn</a>
+                    <a href="#" target="_blank" class="hover:underline">Instagram</a>
+                    <a href="#" target="_blank" class="hover:underline">Behance</a>
+                    <span>Portfolio v1.0</span>
+                    <span>© 2026 Yusuf Albana. All rights reserved.</span>
                 </div>
             </div>
         </aside>
@@ -281,7 +272,7 @@
             <i class="fa-solid fa-xmark text-2xl"></i>
         </button>
         <div class="max-w-4xl w-full max-h-full overflow-y-auto overflow-x-hidden rounded-xl border border-x-border shadow-2xl cursor-default" onclick="event.stopPropagation()">
-            <img src="./assets/CV%20YNA.png" alt="CV Full Preview" class="w-full h-auto block">
+            <img src="./assets/CV%20YNA.webp" alt="CV Full Preview" class="w-full h-auto block">
         </div>
     </div>
 
