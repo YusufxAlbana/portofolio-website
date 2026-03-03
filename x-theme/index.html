@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>Yusuf Albana (@yusufxalbana) / X Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        x: {
+                            black: '#000000',
+                            darkGray: '#16181C',
+                            border: '#2F3336',
+                            text: '#E7E9EA',
+                            textDim: '#71767B',
+                            blue: '#1D9BF0',
+                            blueHover: '#1A8CD8',
+                            hover: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #000000;
+            color: #E7E9EA;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000000; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2F3336; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #71767B; 
+        }
+        
+        /* Tab transitions */
+        .tab-indicator {
+            transition: all 0.2s ease-in-out;
+        }
+        /* Hidden until JS loads */
+        .cloak {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen">
+
+    <div class="max-w-[1280px] mx-auto flex justify-center min-h-screen">
+        
+        <!-- Left Sidebar (Navigation) -->
+        <header class="w-[88px] xl:w-[275px] flex flex-col justify-between items-center xl:items-start xl:px-3 py-2 border-r border-x-border h-screen sticky top-0 shrink-0">
+            <div class="w-full flex flex-col items-center xl:items-start gap-1">
+                <!-- Logo -->
+                <a href="#" class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-x-hover transition duration-200 mb-2 xl:ml-2">
+                    <i class="fa-brands fa-x-twitter text-3xl"></i>
+                </a>
+                
+                <!-- Nav Links -->
+                <nav class="w-full flex flex-col items-center xl:items-start gap-2">
+                    <a href="#" class="group flex items-center xl:justify-start justify-center w-max p-3 rounded-full hover:bg-x-hover transition duration-200">
+                        <i class="fa-solid fa-house text-2xl xl:mr-5"></i>
+                        <span class="hidden xl:block text-xl">Home</span>
+                    </a>
+                    <a href="#" class="group flex items-center xl:justify-start justify-center w-max p-3 rounded-full hover:bg-x-hover transition duration-200">
+                        <i class="fa-solid fa-magnifying-glass text-2xl xl:mr-5"></i>
+                        <span class="hidden xl:block text-xl">Explore</span>
+                    </a>
+                    <a href="#" class="group flex items-center xl:justify-start justify-center w-max p-3 rounded-full hover:bg-x-hover transition duration-200">
+                        <i class="fa-regular fa-bell text-2xl xl:mr-5"></i>
+                        <span class="hidden xl:block text-xl">Notifications</span>
+                    </a>
+                    <a href="#" class="group flex items-center xl:justify-start justify-center w-max p-3 rounded-full hover:bg-x-hover transition duration-200">
+                        <i class="fa-regular fa-envelope text-2xl xl:mr-5"></i>
+                        <span class="hidden xl:block text-xl">Messages</span>
+                    </a>
+                    <a href="#" class="group flex items-center xl:justify-start justify-center w-max p-3 rounded-full hover:bg-x-hover transition duration-200">
+                        <i class="fa-solid fa-user text-2xl xl:mr-5 font-bold"></i>
+                        <span class="hidden xl:block text-xl font-bold">Profile</span>
+                    </a>
+                </nav>
+
+                <!-- Post Button -->
+                <button class="w-12 h-12 xl:w-[90%] xl:h-[52px] bg-x-blue hover:bg-x-blueHover text-white rounded-full font-bold text-[17px] mt-4 shadow-md transition duration-200 flex items-center justify-center">
+                    <i class="fa-solid fa-feather xl:hidden text-xl"></i>
+                    <span class="hidden xl:block">Post</span>
+                </button>
+            </div>
+
+            <!-- User Mini Profile -->
+            <div id="nav-profile-card" class="cloak w-full flex items-center justify-between p-3 rounded-full hover:bg-x-hover transition duration-200 cursor-pointer mt-4 xl:w-full">
+                <div class="flex items-center">
+                    <img id="nav-avatar" src="" alt="User Avatar" class="w-10 h-10 rounded-full object-cover">
+                    <div class="hidden xl:flex flex-col ml-3">
+                        <span id="nav-name" class="font-bold text-[15px] leading-tight leading-5"></span>
+                        <span id="nav-handle" class="text-x-textDim text-[15px] leading-tight"></span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-ellipsis hidden xl:block text-x-textDim"></i>
+            </div>
+        </header>
+
+        <!-- Main Content (Feed) -->
+        <main class="w-full sm:w-[598px] md:w-[600px] border-r border-x-border shrink-0 pb-20 sm:pb-0">
+            <!-- Header Sticky -->
+            <div class="sticky top-0 z-10 bg-black/70 backdrop-blur-md px-4 py-1 flex items-center gap-6 cursor-pointer border-b border-transparent hover:bg-black/80 transition duration-200">
+                <div class="w-9 h-9 rounded-full hover:bg-x-hover flex items-center justify-center transition duration-200 tooltip-trigger">
+                    <i class="fa-solid fa-arrow-left text-[20px]"></i>
+                </div>
+                <div class="flex flex-col cloak" id="header-info">
+                    <h2 class="font-bold text-[20px] leading-6" id="header-name"></h2>
+                    <span class="text-x-textDim text-[13px]" id="header-post-count"></span>
+                </div>
+            </div>
+
+            <!-- Profile Info Section -->
+            <div class="cloak" id="profile-container">
+                <!-- Cover Image -->
+                <div class="h-[200px] w-full bg-x-darkGray overflow-hidden relative group">
+                    <img id="profile-cover" src="" alt="Cover Image" class="w-full h-full object-cover cursor-pointer">
+                </div>
+
+                <!-- Profile Details -->
+                <div class="px-4 relative pb-4">
+                    <!-- Avatar & Edit Button -->
+                    <div class="flex justify-between items-start -mt-16 mb-2">
+                        <div class="w-[134px] h-[134px] rounded-full border-4 border-black relative bg-black cursor-pointer">
+                            <img id="profile-avatar" src="" alt="Avatar" class="w-full h-full rounded-full object-cover">
+                        </div>
+                        <button class="mt-20 px-4 py-1.5 rounded-full border border-x-text text-[15px] font-bold hover:bg-x-hover transition duration-200">
+                            Edit profile
+                        </button>
+                    </div>
+
+                    <!-- Name & Handle -->
+                    <div class="mb-3">
+                        <h1 id="profile-name" class="font-extrabold text-[20px] leading-6"></h1>
+                        <p id="profile-handle" class="text-x-textDim text-[15px]"></p>
+                    </div>
+
+                    <!-- Bio -->
+                    <div id="profile-bio" class="text-[15px] mb-3 leading-snug whitespace-pre-wrap"></div>
+
+                    <!-- Meta Data -->
+                    <div class="flex flex-wrap gap-4 text-[15px] text-x-textDim mb-3">
+                        <span class="flex items-center gap-1">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span id="profile-location"></span>
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <i class="fa-solid fa-link"></i>
+                            <a id="profile-link" href="#" class="text-x-blue hover:underline"></a>
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <i class="fa-regular fa-calendar-days"></i>
+                            <span id="profile-joined"></span>
+                        </span>
+                    </div>
+
+                    <!-- Follow Counts -->
+                    <div class="flex gap-4 text-[15px]">
+                        <a href="#" class="hover:underline flex gap-1">
+                            <span id="profile-following" class="font-bold text-white"></span>
+                            <span class="text-x-textDim">Following</span>
+                        </a>
+                        <a href="#" class="hover:underline flex gap-1">
+                            <span id="profile-followers" class="font-bold text-white"></span>
+                            <span class="text-x-textDim">Followers</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="flex border-b border-x-border w-full mt-2">
+                    <a href="#" class="flex-1 text-center hover:bg-x-hover transition duration-200 flex flex-col items-center justify-center pt-4 outline-none relative group">
+                        <span class="font-bold pb-3 text-white">Posts</span>
+                        <div class="w-14 h-1 bg-x-blue rounded-full absolute bottom-0 tab-indicator"></div>
+                    </a>
+                    <a href="#" class="flex-1 text-center hover:bg-x-hover transition duration-200 flex flex-col items-center justify-center pt-4 text-x-textDim font-medium">
+                        <span class="pb-3 text-x-textDim">Replies</span>
+                    </a>
+                    <a href="#" class="flex-1 text-center hover:bg-x-hover transition duration-200 flex flex-col items-center justify-center pt-4 text-x-textDim font-medium">
+                        <span class="pb-3 text-x-textDim">Highlights</span>
+                    </a>
+                    <a href="#" class="flex-1 text-center hover:bg-x-hover transition duration-200 flex flex-col items-center justify-center pt-4 text-x-textDim font-medium">
+                        <span class="pb-3 text-x-textDim">Media</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Pinned Tweet -->
+            <div class="px-4 py-3 border-b border-x-border flex items-center gap-2 text-x-textDim text-[13px] font-bold">
+                <i class="fa-solid fa-thumbtack ml-6"></i> Pinned
+            </div>
+
+            <!-- Feed (Tweets Container) -->
+            <div id="posts-container" class="cloak pb-20">
+                <!-- Posts inserted by JS -->
+            </div>
+
+            <!-- Loading Spinner (temporary) -->
+            <div id="loading" class="flex justify-center p-8">
+                <i class="fa-solid fa-circle-notch fa-spin text-x-blue text-2xl"></i>
+            </div>
+            
+        </main>
+
+        <!-- Right Sidebar (Trends/Suggestions) -->
+        <aside class="hidden lg:block w-[350px] pl-8 shrink-0 pb-10">
+            <!-- Search Bar -->
+            <div class="relative py-1 bg-black z-10 top-0 sticky pt-2 pb-3">
+                <div class="flex items-center bg-[#202327] rounded-full h-[44px] group focus-within:bg-black focus-within:border focus-within:border-x-blue">
+                    <i class="fa-solid fa-magnifying-glass text-x-textDim ml-5 group-focus-within:text-x-blue transition duration-200"></i>
+                    <input type="text" placeholder="Search" class="bg-transparent border-none outline-none text-[15px] ml-4 text-white w-full placeholder:text-x-textDim">
+                </div>
+            </div>
+
+            <div class="cloak" id="right-sidebar-content">
+                <!-- Subscribe Card -->
+                <div class="bg-x-darkGray rounded-2xl p-4 mb-4 mt-2">
+                    <h2 class="font-extrabold text-[20px] mb-2 leading-6">Subscribe to Premium</h2>
+                    <p class="text-[15px] mb-3 leading-snug">Subscribe to unlock new features and if eligible, receive a share of ads revenue.</p>
+                    <button class="bg-x-blue hover:bg-x-blueHover text-white font-bold py-1.5 px-4 rounded-full text-[15px] transition duration-200">
+                        Subscribe
+                    </button>
+                </div>
+
+                <!-- Trends Card -->
+                <div class="bg-x-darkGray rounded-2xl mb-4 pt-3 overflow-hidden">
+                    <h2 class="font-extrabold text-[20px] px-4 mb-3">What's happening</h2>
+                    <div id="trends-container">
+                        <!-- Trends inserted by JS -->
+                    </div>
+                    <a href="#" class="block p-4 text-x-blue hover:bg-x-hover transition duration-200 text-[15px]">
+                        Show more
+                    </a>
+                </div>
+
+                <!-- Who to follow Card -->
+                <div class="bg-x-darkGray rounded-2xl pt-3 overflow-hidden mb-4">
+                    <h2 class="font-extrabold text-[20px] px-4 mb-3">Who to follow</h2>
+                    <div id="suggestions-container">
+                        <!-- Suggestions inserted by JS -->
+                    </div>
+                    <a href="#" class="block p-4 text-x-blue hover:bg-x-hover transition duration-200 text-[15px]">
+                        Show more
+                    </a>
+                </div>
+
+                <!-- Footer Links -->
+                <div class="flex flex-wrap gap-x-3 gap-y-1 px-4 text-[13px] text-x-textDim">
+                    <a href="#" class="hover:underline">Terms of Service</a>
+                    <a href="#" class="hover:underline">Privacy Policy</a>
+                    <a href="#" class="hover:underline">Cookie Policy</a>
+                    <a href="#" class="hover:underline">Accessibility</a>
+                    <a href="#" class="hover:underline">Ads info</a>
+                    <a href="#" class="hover:underline">More ...</a>
+                    <span>© 2026 X Corp. (Clone)</span>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

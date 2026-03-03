@@ -1,0 +1,86 @@
+{
+    "profile": {
+        "name": "Yusuf Albana",
+        "handle": "@yusufxalbana",
+        "bio": "Web Developer | Open Source Enthusiast | Building things for the web 🚀. Let's create something awesome together.",
+        "location": "Indonesia",
+        "link": "github.com/yusufxalbana",
+        "joined": "Joined March 2026",
+        "following": 142,
+        "followers": "1.2K",
+        "avatar": "https://avatars.githubusercontent.com/u/10000000?v=4",
+        "cover": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=2088&auto=format&fit=crop"
+    },
+    "tweets": [
+        {
+            "id": 1,
+            "name": "Yusuf Albana",
+            "handle": "@yusufxalbana",
+            "time": "2h",
+            "content": "Just launched my new e-commerce project built with React and Node.js! 🚀 Checkout the live demo below. It features a complete payment gateway integration and real-time inventory tracking. #WebDev #ReactJS",
+            "image": "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=2056&auto=format&fit=crop",
+            "replies": 12,
+            "reposts": 5,
+            "likes": 142,
+            "views": "2.1K"
+        },
+        {
+            "id": 2,
+            "name": "Yusuf Albana",
+            "handle": "@yusufxalbana",
+            "time": "1d",
+            "content": "Working on a sleek, minimalist dashboard UI using Tailwind CSS. I'm loving how fast it is to build layouts. Here's a sneak peek! 👀",
+            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
+            "replies": 8,
+            "reposts": 2,
+            "likes": 89,
+            "views": "1.5K"
+        },
+        {
+            "id": 3,
+            "name": "Yusuf Albana",
+            "handle": "@yusufxalbana",
+            "time": "3d",
+            "content": "Open sourced my lightweight custom state management library for vanilla JS projects. It's tiny, fast, and does exactly what you need. Link in bio! 💻✨ #OpenSource #JavaScript",
+            "image": "",
+            "replies": 24,
+            "reposts": 15,
+            "likes": 312,
+            "views": "5.4K"
+        }
+    ],
+    "trending": [
+        {
+            "category": "Technology · Trending",
+            "topic": "#ReactJS",
+            "posts": "125K"
+        },
+        {
+            "category": "Web Development · Trending",
+            "topic": "#TailwindCSS",
+            "posts": "84.2K"
+        },
+        {
+            "category": "Programming · Trending",
+            "topic": "JavaScript",
+            "posts": "542K"
+        },
+        {
+            "category": "Technology · Trending",
+            "topic": "Frontend",
+            "posts": "12.5K"
+        }
+    ],
+    "suggestions": [
+        {
+            "name": "Vercel",
+            "handle": "@vercel",
+            "avatar": "https://avatars.githubusercontent.com/u/14985020?s=200&v=4"
+        },
+        {
+            "name": "Tailwind CSS",
+            "handle": "@tailwindcss",
+            "avatar": "https://avatars.githubusercontent.com/u/22632046?s=200&v=4"
+        }
+    ]
+}
