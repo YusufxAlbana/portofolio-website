@@ -1,27 +1,94 @@
 {
     "projects": [
         {
-            "name": "E-Commerce Next.js",
-            "description": "A full-featured e-commerce platform built with Next.js, Tailwind CSS, and Stripe integration. Supports real-time inventory and SSR.",
+            "name": "AI Schedule Generator",
+            "description": "A Flutter mobile application that leverages AI to generate personalized schedules based on natural language input. Includes local persistent storage and fluid animations.",
             "tech": [
-                "Next.js",
-                "React",
-                "Tailwind CSS",
-                "Stripe"
+                "Flutter",
+                "Dart",
+                "Gemini AI"
             ],
-            "link": "https://github.com/yusufxalbana/ecommerce-nextjs",
-            "image": "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=2056&auto=format&fit=crop"
+            "link": "#",
+            "image": "./assets/project/AI%20scedule%20generator.png"
         },
         {
-            "name": "SaaS Dashboard UI Kit",
-            "description": "A beautifully crafted dashboard template utilizing Vanilla JS and Tailwind CSS. Focuses heavily on accessibility and aesthetic micro-interactions.",
+            "name": "Film / LK21 Vibe",
+            "description": "A web application that aggregates and displays movie information, inspired by popular movie streaming platforms. Features a slick, dark-themed UI.",
             "tech": [
-                "Vanilla JS",
-                "Tailwind CSS",
-                "Chart.js"
+                "HTML",
+                "CSS",
+                "JavaScript",
+                "React"
             ],
-            "link": "https://github.com/yusufxalbana/dash-ui",
-            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop"
+            "link": "#",
+            "image": "./assets/project/Film-LK21-Vibe.png"
+        },
+        {
+            "name": "Klinik Gigi Sehat",
+            "description": "A professional landing page and service portal for a dental clinic. Highlights services, booking processes, and clinic information with a clean, trustworthy design.",
+            "tech": [
+                "HTML",
+                "Tailwind CSS",
+                "JavaScript"
+            ],
+            "link": "#",
+            "image": "./assets/project/Klinik-Gigi-Sehat-Layanan-Kesehatan-Gigi-Profesional-Klinik-Gigi-Sehat.png"
+        },
+        {
+            "name": "Message for Developer",
+            "description": "An interactive web platform enabling direct, anonymous, or public messaging targeted at developers. Includes real-time submission components.",
+            "tech": [
+                "Next.js",
+                "Tailwind CSS",
+                "Node.js"
+            ],
+            "link": "#",
+            "image": "./assets/project/Message-for-Developer.png"
+        },
+        {
+            "name": "Reading List App",
+            "description": "A practical application for tracking books, reading progress, and personal reviews. Designed with a clean three-column layout for an optimal reading experience.",
+            "tech": [
+                "React",
+                "Tailwind CSS",
+                "Vite"
+            ],
+            "link": "#",
+            "image": "./assets/project/Reading-List-App.png"
+        },
+        {
+            "name": "Moodvibes",
+            "description": "An aesthetic platform matching user moods with specific visual vibes, audio, or content. Focuses heavily on micro-animations and seamless UI transitions.",
+            "tech": [
+                "HTML",
+                "CSS",
+                "Vanilla JS"
+            ],
+            "link": "#",
+            "image": "./assets/project/moodvibes.png"
+        },
+        {
+            "name": "Personal Portfolio",
+            "description": "A unique, X (Twitter)-inspired personal portfolio website built natively with modern web standards, highlighting skills, projects, and experiences dynamically.",
+            "tech": [
+                "HTML",
+                "Tailwind CSS",
+                "JavaScript"
+            ],
+            "link": "#",
+            "image": "./assets/project/portofolio%20web.png"
+        },
+        {
+            "name": "QR Scan & Generate",
+            "description": "A versatile tool capable of generating customized QR codes from text/URLs and scanning existing ones via device camera integrations.",
+            "tech": [
+                "JavaScript",
+                "HTML",
+                "CSS",
+                "WebRTC"
+            ],
+            "link": "#",
+            "image": "./assets/project/qr%20scan%20&%20generate.png"
         }
     ]
 }

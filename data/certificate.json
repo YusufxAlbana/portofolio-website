@@ -4,6 +4,7 @@
             "title": "Belajar Back-end Pemula dengan JavaScript",
             "issuer": "Course Platform",
             "date": "2023",
+            "logo": "./assets/sertifikat/logo/dicoding.png",
             "description": "Sertifikat penyelesaian kursus belajar back-end menggunakan JavaScript. Fokus pada pembuatan dan manajemen RESTful API sederhana menggunakan Node.js.",
             "image": "./assets/sertifikat/Belajar%20Back-end%20Pemula%20denan%20JavaScript.jpg"
         },
@@ -11,6 +12,7 @@
             "title": "Belajar Dasar Cloud dan Gen AI di AWS",
             "issuer": "Course Platform",
             "date": "2023",
+            "logo": "./assets/sertifikat/logo/dicoding.png",
             "description": "Mempelajari dasar-dasar komputasi awan (Cloud Computing) dan Generative AI (Kecerdasan Buatan Generatif) menggunakan layanan teknologi AWS.",
             "image": "./assets/sertifikat/Belajar%20Dasar%20Cloud%20dan%20Gen%20AI%20di%20AWS.jpg"
         },
@@ -18,6 +20,7 @@
             "title": "Belajar Membuat Aplikasi Flutter untuk Pemula",
             "issuer": "Course Platform",
             "date": "2023",
+            "logo": "./assets/sertifikat/logo/dicoding.png",
             "description": "Sertifikat keterampilan dasar Flutter, meliputi pembuatan UI yang interaktif dan responsif serta state management sederhana pada aplikasi mobile.",
             "image": "./assets/sertifikat/Belajar%20Membuat%20Aplikasi%20Flutter%20untuk%20Pemula.jpg"
         },
@@ -25,6 +28,7 @@
             "title": "Belajar Dasar Pemrograman Web",
             "issuer": "Course Platform",
             "date": "2023",
+            "logo": "./assets/sertifikat/logo/dicoding.png",
             "description": "Menguasai fundamental pengembangan website secara komprehensif, mencakup struktur dokumen tata letak, dan implementasi dari desain dasar.",
             "image": "./assets/sertifikat/Belajar%20dasar%20Pemograman%20web.jpg"
         },
@@ -32,6 +36,7 @@
             "title": "Front-end Web for Beginners",
             "issuer": "Course Platform",
             "date": "2023",
+            "logo": "./assets/sertifikat/logo/dicoding.png",
             "description": "Sertifikat perolehan keahlian di bidang Front-End Web Development yang lebih lanjut. Membangun dan merealisasikan komponen antarmuka.",
             "image": "./assets/sertifikat/Front-end%20for%20Beginners.jpg"
         },
@@ -39,6 +44,7 @@
             "title": "Belajar Dasar Pemrograman JavaScript",
             "issuer": "Course Platform",
             "date": "2023",
+            "logo": "./assets/sertifikat/logo/dicoding.png",
             "description": "Mendalami esensi dari JavaScript, pengenalan variabel, pengkondisian, perulangan (looping), struktur data awal, dan kemampuan interaktivitas DOM.",
             "image": "./assets/sertifikat/belajar%20dasar%20pemograman%20javascript.jpg"
         },
@@ -46,6 +52,7 @@
             "title": "Memulai Pemrograman dengan Dart",
             "issuer": "Course Platform",
             "date": "2023",
+            "logo": "./assets/sertifikat/logo/dicoding.png",
             "description": "Pembelajaran bahasa pemrograman Dart tingkat awal. Mengasah pemikiran komputasional sebelum melangkah lebih jauh menggunakan framework Flutter.",
             "image": "./assets/sertifikat/memuali%20pemograman%20dengan%20dart.jpg"
         },
@@ -53,6 +60,7 @@
             "title": "Belajar Dasar AI (Artificial Intelligence)",
             "issuer": "Course Platform",
             "date": "2023",
+            "logo": "./assets/sertifikat/logo/dicoding.png",
             "description": "Memahami pondasi dunia kecerdasan buatan, berbagai model dasar AI, dan pemanfaatannya dalam ekosistem teknologi yang kian modern saat ini.",
             "image": "./assets/sertifikat/belajar%20dasar%20AI.jpg"
         },
@@ -60,6 +68,7 @@
             "title": "Google Developer Groups (GDG) Participant",
             "issuer": "GDG",
             "date": "2023",
+            "logo": "./assets/sertifikat/logo/google.png",
             "description": "Berpartisipasi serta tergabung aktif pada kegiatan pengembangan ekosistem Google Developer Groups. Mencari wawasan serta kolaborasi tech-enthusiast.",
             "image": "./assets/sertifikat/GDG%20(google%20Developer%20Groups).jpg"
         },
@@ -67,6 +76,7 @@
             "title": "Pemenang / Peserta Lomba Poster Design",
             "issuer": "Event Organizer",
             "date": "2023",
+            "logo": "./assets/sertifikat/logo/image.png",
             "description": "Sebuah sertifikat yang menunjukkan pengalaman, partisipasi, dan kreativitas yang kuat pada kompetisi dan perlombaan desain grafis serta poster.",
             "image": "./assets/sertifikat/lomba%20Poster%20Design.jpg"
         },
@@ -74,6 +84,7 @@
             "title": "HTML Fundamentals",
             "issuer": "Course Platform",
             "date": "2023",
+            "logo": "./assets/sertifikat/logo/SoloLearn.png",
             "description": "Sertifikat penyelesaian pemahaman bahasa markup HTML untuk membentuk dan merakit seluruh kerangka utama maupun hierarki sebuah website.",
             "image": "./assets/sertifikat/HTML.jpg"
         },
@@ -81,6 +92,7 @@
             "title": "CSS Fundamentals",
             "issuer": "Course Platform",
             "date": "2023",
+            "logo": "./assets/sertifikat/logo/SoloLearn.png",
             "description": "Mempelajari tata cara menyusun gaya, warna, font, layouting, media-queries, hingga pengaturan letak agar presentasi website terlihat profesional.",
             "image": "./assets/sertifikat/CSS.jpg"
         },
@@ -88,6 +100,7 @@
             "title": "JavaScript Fundamentals",
             "issuer": "Course Platform",
             "date": "2023",
+            "logo": "./assets/sertifikat/logo/SoloLearn.png",
             "description": "Tingkat pembelajaran JavaScript fundamental mengenai bagaimana fungsi-fungsi dasar pada browser bekerja sebagai klien serta alur logika sintaksis.",
             "image": "./assets/sertifikat/JS.jpg"
         },
@@ -95,6 +108,7 @@
             "title": "Web Development Comprehensive",
             "issuer": "Course Platform",
             "date": "2023",
+            "logo": "./assets/sertifikat/logo/SoloLearn.png",
             "description": "Mencakup pemahaman penuh secara garis besar terhadap siklus hidup dan prinsip inti pembuatan sistem atau aplikasi web modern saat ini.",
             "image": "./assets/sertifikat/Web%20development.jpg"
         },
@@ -102,6 +116,7 @@
             "title": "Python Programming Fundamentals",
             "issuer": "Course Platform",
             "date": "2023",
+            "logo": "./assets/sertifikat/logo/SoloLearn.png",
             "description": "Menyelesaikan kelas fondasi Python, menyelami penulisan script yang bersih, sintaks yang ekspresif, kontrol alur, dan struktur logika operasional dasar.",
             "image": "./assets/sertifikat/python.jpg"
         }

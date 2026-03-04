@@ -375,12 +375,23 @@ function renderCertificate(certificate) {
             `;
         }
 
+        let logoHtml = `
+            <div class="w-10 h-10 rounded-full bg-x-blue/10 flex items-center justify-center text-x-blue border border-x-border">
+                <i class="fa-solid fa-certificate text-xl"></i>
+            </div>
+        `;
+        if (cert.logo) {
+            logoHtml = `
+                <div class="w-10 h-10 rounded-full border border-x-border overflow-hidden bg-white">
+                    <img src="${cert.logo}" alt="${cert.issuer} Logo" class="w-full h-full object-cover">
+                </div>
+            `;
+        }
+
         const certHtml = `
             <article class="p-4 border-b border-x-border hover:bg-x-hover transition duration-200 flex gap-3">
                 <div class="shrink-0 pt-1">
-                    <div class="w-10 h-10 rounded-full bg-x-blue/10 flex items-center justify-center text-x-blue border border-x-border">
-                        <i class="fa-solid fa-certificate text-xl"></i>
-                    </div>
+                    ${logoHtml}
                 </div>
                 <div class="flex-1 min-w-0">
                     <div class="flex justify-between items-start">
